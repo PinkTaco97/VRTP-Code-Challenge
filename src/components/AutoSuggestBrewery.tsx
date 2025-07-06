@@ -15,7 +15,7 @@ import { useDebounce, useFetch } from "@/hooks";
 // Types
 import { Brewery } from "@/types";
 
-export default function AutoSuggest() {
+export default function AutoSuggestBrewery() {
   // State variables
   const [query, setQuery] = useState(""); // Search query
   const debouncedQuery = useDebounce(query, 500); // Debounced search query

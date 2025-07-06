@@ -1,4 +1,4 @@
-import AutoSuggest from "../components/AutoSuggest";
+import AutoSuggestBrewery from "../components/AutoSuggestBrewery";
 import Filters from "../components/Filters";
 import BreweryTable from "../components/BreweryTable";
 
@@ -17,7 +17,7 @@ export default function Home() {
               alt="Brewery Logo"
             />
             <div className="max-w-md mx-auto mt-[-100px]">
-              <AutoSuggest />
+              <AutoSuggestBrewery />
             </div>
           </div>
         </div>
