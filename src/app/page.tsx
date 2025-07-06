@@ -1,4 +1,4 @@
-import AutoSuggestBrewery from "../components/AutoSuggestBrewery";
+import AutoSuggestBrewery from "../components/AutoSuggestBrewery/AutoSuggestBrewery.component";
 import Filters from "../components/Filters";
 import BreweryTable from "../components/BreweryTable";
 
