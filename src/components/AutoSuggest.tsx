@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Next
 import { useRouter } from "next/navigation";
@@ -10,36 +10,31 @@ import { useRouter } from "next/navigation";
 import { API_BASE_URL } from "@/constants";
 
 // Hooks
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce, useFetch } from "@/hooks";
+
+// Types
+import { Brewery } from "@/types";
 
 export default function AutoSuggest() {
-  const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<any[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const debouncedQuery = useDebounce(query, 500);
-  const router = useRouter();
+  // State variables
+  const [query, setQuery] = useState(""); // Search query
+  const debouncedQuery = useDebounce(query, 500); // Debounced search query
+  const [showSuggestions, setShowSuggestions] = useState(false); // Flag to control suggestion visibility
+  const router = useRouter(); // Next.js router for navigation
 
-  useEffect(() => {
-    if (debouncedQuery.length > 2) {
-      setIsLoading(true);
-      fetch(`${API_BASE_URL}/search?query=${debouncedQuery}&per_page=3`)
-        .then((res) => res.json())
-        .then((data) => {
-          setSuggestions(data);
-          setTimeout(() => setIsLoading(false), 500);
-        });
-    } else {
-      setSuggestions([]);
-    }
-  }, [debouncedQuery]);
+  // Fetch suggestions based on the debounced query
+  const { data: suggestions, isLoading } = useFetch<Brewery[]>(
+    `${API_BASE_URL}/search?query=${debouncedQuery}&per_page=3`,
+    debouncedQuery.length > 2,
+    [debouncedQuery]
+  );
 
   return (
     <div className="mb-4 relative">
       <div>
         <input
           className={`w-full bg-white border border-white text-black text-sm  p-3 focus:border-blue-500 ${
-            suggestions.length > 0 && !!showSuggestions
+            (suggestions?.length ?? 0) > 0 && !!showSuggestions
               ? "rounded-t-xl"
               : "rounded-xl"
           }`}
@@ -59,9 +54,9 @@ export default function AutoSuggest() {
           </div>
         )}
       </div>
-      {suggestions.length > 0 && !!showSuggestions && (
+      {(suggestions?.length ?? 0) > 0 && !!showSuggestions && (
         <ul className="absolute w-full z-10 max-h-60 overflow-auto">
-          {suggestions.map((brewery, i) => (
+          {suggestions?.map((brewery, i) => (
             <li
               key={brewery.id}
               className={`p-2 bg-white text-left text-black hover:bg-gray-100 cursor-pointer ${
