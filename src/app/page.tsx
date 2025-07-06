@@ -21,7 +21,7 @@ export default function Home() {
           </div>
         </div>
         <div
-          className="snap-start flex flex-col items-center justify-start content-center py-10 bg-cover bg-center"
+          className="snap-start flex flex-col items-center justify-start content-center py-10 bg-cover bg-center min-h-screen"
           style={{ backgroundImage: "url('/bg-3.jpg')" }}
         >
           <BreweryFilters />
