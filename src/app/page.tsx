@@ -1,6 +1,5 @@
-import AutoSuggestBrewery from "../components/AutoSuggestBrewery/AutoSuggestBrewery.component";
-import Filters from "../components/Filters";
-import BreweryTable from "../components/BreweryTable";
+// Components
+import { AutoSuggestBrewery, BreweryFilters, BreweryTable } from "@/components";
 
 export default function Home() {
   return (
@@ -22,10 +21,10 @@ export default function Home() {
           </div>
         </div>
         <div
-          className="snap-start flex flex-col items-center justify-start content-center py-10"
-          style={{ backgroundImage: "url('/bg-2.jpg')" }}
+          className="snap-start flex flex-col items-center justify-start content-center py-10 bg-cover bg-center"
+          style={{ backgroundImage: "url('/bg-3.jpg')" }}
         >
-          <Filters />
+          <BreweryFilters />
           <BreweryTable />
         </div>
       </div>
