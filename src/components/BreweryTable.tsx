@@ -1,7 +1,13 @@
 "use client";
 
+// React
 import { useEffect, useState } from "react";
+
+// Next
 import Link from "next/link";
+
+// Constants
+import { API_BASE_URL, DEFAULT_PER_PAGE } from "@/constants";
 
 export default function BreweryTable() {
   const [breweries, setBreweries] = useState<any[]>([]);
@@ -10,8 +16,8 @@ export default function BreweryTable() {
 
   useEffect(() => {
     const fetchData = () => {
-      const url = new URL("https://api.openbrewerydb.org/v1/breweries");
-      url.searchParams.set("per_page", "15");
+      const url = new URL(API_BASE_URL);
+      url.searchParams.set("per_page", DEFAULT_PER_PAGE.toString());
       url.searchParams.set("page", page.toString());
       if (filters.name) url.searchParams.set("by_name", filters.name);
       if (filters.city) url.searchParams.set("by_city", filters.city);
@@ -37,7 +43,7 @@ export default function BreweryTable() {
     <div>
       <table className="w-full table-auto border-collapse bg-white rounded shadow-sm text-black">
         <thead>
-          <tr className="bg-slate-900 p-2 text-left text-white p-2">
+          <tr className="bg-slate-900 p-2 text-left text-white p-2 sticky top-0">
             <th className="p-3">Name</th>
             <th className="p-3">Type</th>
             <th className="p-3">City</th>

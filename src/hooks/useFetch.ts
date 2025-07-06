@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 export function useFetch<T>(
   url: string,
-  condition: boolean
+  condition: boolean,
+  dependencies: any[] = []
 ): { data: T | null; loading: boolean } {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ export function useFetch<T>(
       .then((res) => res.json())
       .then(setData)
       .finally(() => setLoading(false));
-  }, [url]);
+  }, [url, condition, ...dependencies]);
 
   return { data, loading };
 }

@@ -1,6 +1,9 @@
+// Constants
+import { API_BASE_URL, DEFAULT_PER_PAGE } from "@/constants";
+
 export const fetchBreweries = async (page = 1, name = "", city = "") => {
   const res = await fetch(
-    `https://api.openbrewerydb.org/v1/breweries?page=${page}&per_page=15&by_name=${name}&by_city=${city}`
+    `${API_BASE_URL}?page=${page}&per_page=${DEFAULT_PER_PAGE}&by_name=${name}&by_city=${city}`
   );
   return res.json();
 };
