@@ -73,8 +73,15 @@ export default function AutoSuggest({
   return (
     <div className="mb-4 relative">
       <div>
+        <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+          <img
+            src="magnifying-glass-solid.svg"
+            className="h-5 w-5"
+            alt="Search Icon"
+          />
+        </div>
         <input
-          className={`w-full bg-white border border-white text-black text-sm p-3 focus:border-blue-500 transition-property:border-radius ease-in-out duration-500 ${
+          className={`pl-11 w-full bg-white border border-white text-black text-sm p-3 focus:border-blue-500 transition-property:border-radius ease-in-out duration-500 ${
             suggestions.length > 0 && showSuggestions
               ? "rounded-t-xl"
               : "rounded-xl"
