@@ -102,24 +102,3 @@ export default function Pagination({
     </div>
   );
 }
-
-// Helper to control visible page numbers
-function getVisiblePages(current: number, total: number): (number | "...")[] {
-  const delta = 2;
-  const range: (number | "...")[] = [];
-
-  const left = Math.max(2, current - delta);
-  const right = Math.min(total - 1, current + delta);
-
-  if (left > 2) range.push(1, "...");
-  else range.push(1);
-
-  for (let i = left; i <= right; i++) {
-    range.push(i);
-  }
-
-  if (right < total - 1) range.push("...", total);
-  else if (right < total) range.push(total);
-
-  return range;
-}
