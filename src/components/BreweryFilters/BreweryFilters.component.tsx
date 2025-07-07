@@ -26,7 +26,6 @@ export default function Filters() {
       className={`sm:h-full relative w-full  flex sm:justify-end justify-center
         ${show ? "sm:mb-7 mb-50" : "mb-3"}`}
     >
-      {/* Toggle visibility button */}
       <button
         type="button"
         onClick={() => setShow(true)}
@@ -41,12 +40,15 @@ export default function Filters() {
         />
       </button>
 
-      {/* Sliding panel: hidden behind table when closed, slides down over table when opened */}
       <div
         className={`
           sm:w-auto w-full
-          absolute top-0 right-0 transform transition-transform duration-300 ease-in-out \
-          ${show ? "translate-y-0 z-0" : "translate-y-full z-0"}
+          absolute top-0 right-0 transform transition-all duration-300 ease-in-out \
+          ${
+            show
+              ? "translate-y-0 z-0 opacity-100"
+              : "translate-y-full z-0 opacity-0"
+          }
           `}
       >
         <div className="flex flex-wrap gap-4 bg-slate-900 py-4 px-4 rounded-xl shadow-lg md:w-full">
