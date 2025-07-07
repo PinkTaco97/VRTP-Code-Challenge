@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Filters() {
   const [name, setName] = useState("");
@@ -18,6 +18,11 @@ export default function Filters() {
   const resetFilters = () => {
     setName("");
     setCity("");
+    applyFilters();
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     applyFilters();
   };
 
@@ -48,38 +53,52 @@ export default function Filters() {
           `}
       >
         <div className="flex flex-wrap gap-4 bg-slate-900 py-4 px-4 rounded-xl shadow-lg md:w-full">
-          <button
-            onClick={() => setShow(false)}
-            className="sm:hidden flex sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
-          >
-            <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
-          </button>
-          <input
-            className="p-2 border rounded-xl w-full sm:w-auto"
-            placeholder="Filter by name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            className="p-2 border rounded-xl w-full sm:w-auto"
-            placeholder="Filter by city"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-          <button
-            onClick={applyFilters}
-            className="sm:w-auto w-full bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition-colors"
-          >
-            Go
-          </button>
-          {(name || city) && (
+          <form onSubmit={onSubmit} className="flex flex-wrap gap-4">
             <button
-              onClick={resetFilters}
-              className="bg-red-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-red-700 transition-colors"
+              onClick={() => setShow(false)}
+              className="sm:hidden flex sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
             >
-              Reset
+              <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
             </button>
-          )}
+            <input
+              className="p-2 border rounded-xl w-full sm:w-auto"
+              placeholder="Filter by name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  applyFilters();
+                }
+              }}
+            />
+            <input
+              className="p-2 border rounded-xl w-full sm:w-auto"
+              placeholder="Filter by city"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  applyFilters();
+                }
+              }}
+            />
+            <button
+              onClick={applyFilters}
+              className="sm:w-auto w-full bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition-colors"
+            >
+              Go
+            </button>
+            {(name || city) && (
+              <button
+                onClick={resetFilters}
+                className="bg-red-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-red-700 transition-colors"
+              >
+                Reset
+              </button>
+            )}
+          </form>
           <button
             onClick={() => setShow(false)}
             className="sm:flex hidden sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
