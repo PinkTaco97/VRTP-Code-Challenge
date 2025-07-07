@@ -23,15 +23,22 @@ export default function Filters() {
 
   return (
     <div
-      className={`sm:h-full relative w-full  flex justify-end
-        ${show ? "sm:mb-7 mb-50" : "lg:mb-3"}`}
+      className={`sm:h-full relative w-full  flex sm:justify-end justify-center
+        ${show ? "sm:mb-7 mb-50" : "mb-3"}`}
     >
       {/* Toggle visibility button */}
       <button
+        type="button"
         onClick={() => setShow(true)}
-        className="mr-4 mt-5 bg-slate-900 text-white p-3 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer"
+        className="w-full
+           mt-5 bg-slate-900 text-white p-3 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer
+          sm:w-auto sm:mr-4"
       >
-        <img src="filter-solid.svg" className="h-5 w-5" alt="Filter" />
+        <img
+          src="filter-solid.svg"
+          className="h-5 w-5 justify-self-center"
+          alt="Filter"
+        />
       </button>
 
       {/* Sliding panel: hidden behind table when closed, slides down over table when opened */}
@@ -43,6 +50,12 @@ export default function Filters() {
           `}
       >
         <div className="flex flex-wrap gap-4 bg-slate-900 py-4 px-4 rounded-xl shadow-lg md:w-full">
+          <button
+            onClick={() => setShow(false)}
+            className="sm:hidden flex sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
+          >
+            <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
+          </button>
           <input
             className="p-2 border rounded-xl w-full sm:w-auto"
             placeholder="Filter by name"
@@ -71,7 +84,7 @@ export default function Filters() {
           )}
           <button
             onClick={() => setShow(false)}
-            className="sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer flex justify-center"
+            className="sm:flex hidden sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
           >
             <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
           </button>

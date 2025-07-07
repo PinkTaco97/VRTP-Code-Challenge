@@ -55,78 +55,84 @@ export default function BreweryTable() {
     <main className="w-full max-w-7xl mx-auto px-5 relative">
       <BreweryFilters />
       <div
-        className={` transition-all duration-500 ease-in-out transform ${
-          isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"
-        }`}
+        className={`
+          transition-all duration-500 ease-in-out transform
+          ${isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
       >
-        <table className="w-full table-auto border-collapse bg-white shadow-sm text-black rounded-xl transition-all duration-500 ease-in-out transform">
-          <thead className="transition-all duration-300">
-            <tr className="bg-slate-900 text-white sticky top-0 z-20">
-              <th className="p-3 text-left rounded-tl-xl">Name</th>
-              <th className="p-3 text-left">Type</th>
-              <th className="p-3 text-left">City</th>
-              <th className="p-3 text-left">Country</th>
-              <th className="p-3 text-left">Phone</th>
-              <th className="p-3 text-left rounded-tr-xl">Website</th>
-            </tr>
-          </thead>
-          <tbody className="transition-all duration-300">
-            {isLoading ? (
-              Array.from({ length: DEFAULT_PER_PAGE }).map((_, i) => (
-                <tr key={`loading-${i}`} className="animate-pulse">
-                  <td colSpan={6} className="p-5"></td>
-                </tr>
-              ))
-            ) : breweries?.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="p-4 text-center">
-                  No breweries found.
-                </td>
+        <div className="overflow-hidden rounded-xl bg-white shadow-sm">
+          <table className="w-full table-auto border-separate border-spacing-0 bg-white shadow-sm text-black overflow-hidden rounded-xl">
+            <thead className="transition-all duration-300">
+              <tr className="bg-slate-900 text-white sticky top-0 z-20">
+                <th className="p-3 text-center rounded-tl-xl">Name</th>
+                <th className="p-3 text-center">Type</th>
+                <th className="p-3 text-center">City</th>
+                <th className="p-3 text-center">Country</th>
+                <th className="p-3 text-center">Phone</th>
+                <th className="p-3 text-center rounded-tr-xl">Website</th>
               </tr>
-            ) : (
-              breweries?.map((brewery, i) => (
-                <tr
-                  key={brewery.id}
-                  className={`
+            </thead>
+            <tbody className="transition-all duration-300">
+              {isLoading ? (
+                Array.from({ length: DEFAULT_PER_PAGE }).map((_, i) => (
+                  <tr key={`loading-${i}`} className="animate-pulse">
+                    <td colSpan={6} className="p-5"></td>
+                  </tr>
+                ))
+              ) : breweries?.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="p-4 text-center">
+                    No breweries found.
+                  </td>
+                </tr>
+              ) : (
+                breweries?.map((brewery, i) => (
+                  <tr
+                    key={brewery.id}
+                    className={`
                   transition-all duration-300 opacity-0 animate-fade-in
                   ${i % 2 === 0 ? "bg-white" : "bg-gray-100"} ${
-                    i === breweries.length - 1
-                      ? "border-b-0 rounded-b-xl bg-blue-600"
-                      : "border-b border-gray-200"
-                  }`}
-                >
-                  <td
-                    className={`p-2 text-blue-600 underline ${
-                      i === breweries.length - 1 ? "rounded-b-xl" : ""
+                      i === breweries.length - 1
+                        ? "border-b-0 rounded-b-xl bg-blue-600"
+                        : "border-b border-gray-200"
                     }`}
                   >
-                    <Link href={`/brewery/${brewery.id}`}>{brewery.name}</Link>
-                  </td>
-                  <td className="p-2">{brewery.brewery_type}</td>
-                  <td className="p-2">{brewery.city}</td>
-                  <td className="p-2">{brewery.country}</td>
-                  <td className="p-2">{brewery.phone || "N/A"}</td>
-                  <td
-                    className={`p-2 text-center ${
-                      i === breweries.length - 1 ? "rounded-b-xl" : ""
-                    }`}
-                  >
-                    {brewery.website_url && (
-                      <a
-                        href={brewery.website_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 underline"
-                      >
-                        Visit
-                      </a>
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                    <td
+                      className={`p-2 text-blue-600 underline text-center ${
+                        i === breweries.length - 1 ? "rounded-b-xl" : ""
+                      }`}
+                    >
+                      <Link href={`/brewery/${brewery.id}`}>
+                        {brewery.name}
+                      </Link>
+                    </td>
+                    <td className="p-2 text-center">{brewery.brewery_type}</td>
+                    <td className="p-2 text-center">{brewery.city}</td>
+                    <td className="p-2 text-center">{brewery.country}</td>
+                    <td className="p-2 text-center">
+                      {brewery.phone || "N/A"}
+                    </td>
+                    <td
+                      className={`p-2 text-center ${
+                        i === breweries.length - 1 ? "rounded-b-xl" : ""
+                      }`}
+                    >
+                      {brewery.website_url && (
+                        <a
+                          href={brewery.website_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
+                          Visit
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       <Pagination
         page={page}
