@@ -25,7 +25,7 @@ export default function BreweryTableRow({
       <td className="p-2 text-center">{brewery.city}</td>
       <td className="p-2 text-center">{brewery.country}</td>
       <td className="p-2 text-center">{brewery.phone || "N/A"}</td>
-      <td className="p-2 text-center">
+      <td className="p-2 text-center text-blue-600 underline">
         {brewery.website_url && (
           <a
             href={brewery.website_url}
