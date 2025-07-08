@@ -86,11 +86,11 @@ export default function BreweryFilters() {
           ${isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
           `}
       >
-        <div className="flex flex-wrap gap-4 bg-slate-900 py-4 px-4 rounded-xl shadow-lg md:w-full">
+        <div className="flex flex-wrap gap-4 bg-slate-900 py-4 px-4 rounded-xl shadow-lg">
           <form
             onSubmit={onSubmit}
             onReset={onReset}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-4 w-full sm:w-auto"
           >
             {/* Small screen close */}
             <CloseButton onClick={() => setIsOpen(false)} />
