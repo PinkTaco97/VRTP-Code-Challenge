@@ -34,7 +34,9 @@ export default function BreweryTable() {
 
   // Build URL for useFetch
   const url = useMemo(() => {
-    const u = new URL(API_BASE_URL);
+    // on the server just return an empty string (or some placeholder)
+    if (typeof window === "undefined") return "";
+    const u = new URL(API_BASE_URL, window.location.origin);
     u.searchParams.set("per_page", DEFAULT_PER_PAGE.toString());
     u.searchParams.set("page", page.toString());
     if (filters.name) u.searchParams.set("by_name", filters.name);
