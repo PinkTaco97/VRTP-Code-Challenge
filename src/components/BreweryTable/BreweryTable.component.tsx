@@ -1,73 +1,31 @@
 "use client";
 
 // React
-import { useState, useEffect, useMemo } from "react";
-
-// Next
-import Link from "next/link";
+import { useState } from "react";
 
 // Constants
-import { API_BASE_URL, DEFAULT_PER_PAGE } from "@/constants";
+import { DEFAULT_PER_PAGE } from "@/constants";
 
 // Components
-import { Pagination, BreweryFilters } from "@/components";
+import { Pagination, LoadingOverlay } from "@/components";
 
 // Hooks
-import { useFetch } from "@/hooks";
+import { useFilters, useBreweries } from "@/hooks";
 
-// Types
-import { Brewery } from "@/types";
+// Local Components
+import BreweryTableRow from "./BreweryTableRow.component";
+import BreweryTableFilters from "./BreweryTableFilters.component";
 
 export default function BreweryTable() {
   const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState({ name: "", city: "" });
-
-  // Listen for custom filter updates
-  useEffect(() => {
-    const handler = (e: any) => {
-      setFilters(e.detail);
-      setPage(1);
-    };
-    window.addEventListener("filtersUpdated", handler);
-    return () => window.removeEventListener("filtersUpdated", handler);
-  }, []);
-
-  // Build URL for useFetch
-  const url = useMemo(() => {
-    // on the server just return an empty string (or some placeholder)
-    if (typeof window === "undefined") return "";
-    const u = new URL(API_BASE_URL, window.location.origin);
-    u.searchParams.set("per_page", DEFAULT_PER_PAGE.toString());
-    u.searchParams.set("page", page.toString());
-    if (filters.name) u.searchParams.set("by_name", filters.name);
-    if (filters.city) u.searchParams.set("by_city", filters.city);
-    return u.toString();
-  }, [page, filters]);
-
-  const { data: breweries, isLoading } = useFetch<Brewery[]>(url, !!url, [
-    page,
-    filters.name,
-    filters.city,
-  ]);
-
-  const hasNextPage = (breweries?.length ?? 0) === DEFAULT_PER_PAGE;
-  const totalPages = hasNextPage ? page + 1 : page;
+  const filters = useFilters();
+  const { breweries, isLoading, totalPages } = useBreweries(page, filters);
 
   return (
     <main className="w-full max-w-5xl mx-auto px-5 relative">
-      <BreweryFilters />
-      <div
-        className={`
-          absolute left-1/2 top-25 -translate-x-1/2
-          transition-all duration-500 ease-in-out transform
-          ${isLoading ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
-      >
-        <img
-          src="loading.svg"
-          className="animate-spin duration-1 h-25 w-25 rounded-full text-blue-500"
-          alt="Loading"
-        />
-      </div>
+      <BreweryTableFilters />
+      <LoadingOverlay isLoading={isLoading} />
+
       <div
         className={`
           transition-all duration-500 ease-in-out transform
@@ -100,40 +58,11 @@ export default function BreweryTable() {
                 </tr>
               ) : (
                 breweries?.map((brewery, i) => (
-                  <tr
+                  <BreweryTableRow
                     key={brewery.id}
-                    className={`
-                  transition-all duration-300 opacity-0 animate-fade-in
-                  ${i % 2 === 0 ? "bg-white" : "bg-gray-100"} ${
-                      i === breweries.length - 1
-                        ? "border-b-0 rounded-b-xl bg-blue-600"
-                        : "border-b border-gray-200"
-                    }`}
-                  >
-                    <td className="p-2 text-blue-600 underline text-center">
-                      <Link href={`/brewery/${brewery.id}`}>
-                        {brewery.name}
-                      </Link>
-                    </td>
-                    <td className="p-2 text-center">{brewery.brewery_type}</td>
-                    <td className="p-2 text-center">{brewery.city}</td>
-                    <td className="p-2 text-center">{brewery.country}</td>
-                    <td className="p-2 text-center">
-                      {brewery.phone || "N/A"}
-                    </td>
-                    <td className="p-2 text-center">
-                      {brewery.website_url && (
-                        <a
-                          href={brewery.website_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 underline"
-                        >
-                          Visit
-                        </a>
-                      )}
-                    </td>
-                  </tr>
+                    brewery={brewery}
+                    index={i}
+                  />
                 ))
               )}
             </tbody>

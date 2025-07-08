@@ -13,7 +13,7 @@ import {
 // Utilities
 import { dispatchBreweryFilters } from "@/utils/filters";
 
-export default function BreweryFilters() {
+export default function BreweryTableFilters() {
   // Local state for filters
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
