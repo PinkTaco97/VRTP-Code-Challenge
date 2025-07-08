@@ -4,7 +4,7 @@ import { AutoSuggestBrewery, BreweryTable } from "@/components";
 export default function Home() {
   return (
     <main className="overflow-hidden">
-      <div className="snap-y snap-mandatory h-screen w-screen overflow-y-scroll verflow-x-hidden">
+      <div className="snap-y snap-mandatory h-screen w-screen overflow-y-scroll overflow-x-hidden">
         <div
           className="snap-start w-screen h-screen flex items-center justify-center bg-cover bg-center rounded-lg shadow-lg content-center"
           style={{ backgroundImage: "url('/bg.jpg')" }}

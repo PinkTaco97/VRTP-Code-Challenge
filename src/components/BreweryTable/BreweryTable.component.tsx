@@ -28,7 +28,7 @@ export default function BreweryTable() {
 
       <div
         className={`
-          transition-all duration-500 ease-in-out transform
+          transition-all duration-500 ease-in-out transform z-20
           ${isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
       >
         <div className="overflow-y-hidden overflow-x-scroll rounded-xl bg-white shadow-sm">

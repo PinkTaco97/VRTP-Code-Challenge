@@ -82,7 +82,7 @@ export default function BreweryTableFilters() {
       <div
         className={`
           sm:w-auto w-full
-          absolute top-0 right-0 transform transition-all duration-300 ease-in-out
+          absolute top-0 right-0 transform transition-all duration-300 ease-in-out z-10
           ${isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
           `}
       >
