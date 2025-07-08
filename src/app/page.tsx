@@ -12,7 +12,7 @@ export default function Home() {
           <div className="container mx-auto p-6 text-center mb-50">
             <img
               src="logo.png"
-              className="h-[500px] mx-auto"
+              className="h-[500px] mx-auto object-contain"
               alt="Brewery Logo"
             />
             <div className="max-w-md mx-auto mt-[-100px]">
