@@ -1,55 +1,68 @@
 "use client";
 
-import React, { useState } from "react";
+// React
+import React, { useState, useCallback } from "react";
 
-export default function Filters() {
+// Utilities
+import { dispatchBreweryFilters } from "@/utils/filters";
+
+export default function BreweryFilters() {
+  // Local state for filters
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
-  const [show, setShow] = useState(false);
-  const hasFilters = name || city;
+  const [isOpen, setIsOpen] = useState(false);
+  const hasFilters = Boolean(name || city);
 
-  const applyFilters = (e: React.FormEvent) => {
-    e.preventDefault();
-    const event = new CustomEvent("filtersUpdated", {
-      detail: { name, city },
-    });
-    window.dispatchEvent(event);
-  };
+  // Apply filters
+  const applyFilters = useCallback(() => {
+    dispatchBreweryFilters(name, city);
+  }, [name, city]);
 
-  // Reset filters
-  const clearFilters = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Clear filters
+  const clearFilters = useCallback(() => {
     setName("");
     setCity("");
-    const event = new CustomEvent("filtersUpdated", {
-      detail: { name: "", city: "" },
-    });
-    window.dispatchEvent(event);
-  };
+    dispatchBreweryFilters("", "");
+  }, []);
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    applyFilters(e);
-  };
+  // Handle form submission
+  const onSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      applyFilters();
+    },
+    [applyFilters]
+  );
 
+  // Handle form reset
+  const onReset = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      clearFilters();
+    },
+    [clearFilters]
+  );
+
+  // Handle keydown events for accessibility
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      hasFilters ? applyFilters(e) : setShow(true);
+      hasFilters ? applyFilters() : setIsOpen(true);
     } else if (e.key === "Escape") {
       e.preventDefault();
-      hasFilters ? clearFilters(e) : setShow(false);
+      hasFilters ? clearFilters() : setIsOpen(false);
     }
   };
 
   return (
     <div
       className={`sm:h-full relative w-full flex sm:justify-end justify-center
-        ${show ? "sm:mb-7 mb-50" : "mb-3"}`}
+        ${isOpen ? "sm:mb-7 mb-50" : "mb-3"}`}
     >
+      {/* Filter Button */}
       <button
         type="button"
-        onClick={() => setShow(true)}
+        onClick={() => setIsOpen(true)}
         onKeyDown={handleKeyDown}
         className="w-full
            mt-5 bg-slate-900 text-white p-3 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer
@@ -66,13 +79,18 @@ export default function Filters() {
         className={`
           sm:w-auto w-full
           absolute top-0 right-0 transform transition-all duration-300 ease-in-out
-          ${show ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
+          ${isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}
           `}
       >
         <div className="flex flex-wrap gap-4 bg-slate-900 py-4 px-4 rounded-xl shadow-lg md:w-full">
-          <form onSubmit={onSubmit} className="flex flex-wrap gap-4">
+          <form
+            onSubmit={onSubmit}
+            onReset={onReset}
+            className="flex flex-wrap gap-4"
+          >
+            {/* Small screen close */}
             <button
-              onClick={() => setShow(false)}
+              onClick={() => setIsOpen(false)}
               className="sm:hidden flex sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
             >
               <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
@@ -110,8 +128,10 @@ export default function Filters() {
               )}
             </div>
           </form>
+
+          {/* Large screen close button */}
           <button
-            onClick={() => setShow(false)}
+            onClick={() => setIsOpen(false)}
             className="sm:flex hidden sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
           >
             <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
