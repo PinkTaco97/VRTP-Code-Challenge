@@ -1,22 +1,17 @@
 "use client";
 
+// Next.js
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import useFetch from "@/hooks/useFetch";
+
+// Constants
 import { API_BASE_URL, GOOGLE_MAPS_BASE_URL } from "@/constants";
 
-export type Brewery = {
-  id: string;
-  name: string;
-  website_url: string;
-  street: string;
-  city: string;
-  state: string;
-  postal_code: string;
-  country: string;
-  latitude: string;
-  longitude: string;
-};
+// Hooks
+import useFetch from "@/hooks/useFetch";
+
+// Types
+import { Brewery } from "@/types";
 
 export default function BreweryDetails() {
   const { id } = useParams();
