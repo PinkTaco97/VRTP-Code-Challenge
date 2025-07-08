@@ -11,7 +11,7 @@ import {
 } from "@/components/buttons";
 
 // Utilities
-import { dispatchBreweryFilters } from "@/utils/filters";
+import { dispatchBreweryFilters } from "@/utils";
 
 export default function BreweryTableFilters() {
   // Local state for filters
