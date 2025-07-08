@@ -7,7 +7,7 @@ export default function Home() {
       <div className="snap-y snap-mandatory h-screen w-screen overflow-y-scroll verflow-x-hidden">
         <div
           className="snap-start w-screen h-screen flex items-center justify-center bg-cover bg-center rounded-lg shadow-lg content-center"
-          style={{ backgroundImage: "url('/bg-70.jpg')" }}
+          style={{ backgroundImage: "url('/bg.jpg')" }}
         >
           <div className="container mx-auto p-6 text-center mb-50">
             <img
@@ -22,7 +22,7 @@ export default function Home() {
         </div>
         <div
           className="snap-start flex flex-col items-center justify-start content-center py-5 bg-cover bg-center min-h-screen"
-          style={{ backgroundImage: "url('/bg-3.jpg')" }}
+          style={{ backgroundImage: "url('/bg-alt.jpg')" }}
         >
           <BreweryTable />
         </div>

@@ -3,7 +3,7 @@
 // React
 import { useState } from "react";
 
-// Next
+// Next.js
 import { useRouter } from "next/navigation";
 
 // Constants
