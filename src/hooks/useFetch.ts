@@ -16,7 +16,12 @@ export default function useFetch<T>(
     fetch(url)
       .then((res) => res.json())
       .then(setData)
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsLoading(false))
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setData(null);
+        setIsLoading(false);
+      });
   }, [url, condition, ...dependencies]);
 
   return { data, isLoading };

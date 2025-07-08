@@ -56,6 +56,18 @@ export default function BreweryTable() {
       <BreweryFilters />
       <div
         className={`
+          absolute left-1/2 top-25 -translate-x-1/2
+          transition-all duration-500 ease-in-out transform
+          ${isLoading ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+      >
+        <img
+          src="loading.svg"
+          className="animate-spin duration-1 h-25 w-25 rounded-full text-blue-500"
+          alt="Loading"
+        />
+      </div>
+      <div
+        className={`
           transition-all duration-500 ease-in-out transform
           ${isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
       >
@@ -63,12 +75,12 @@ export default function BreweryTable() {
           <table className="w-full table-auto border-separate border-spacing-0 bg-white shadow-sm text-black overflow-hidden rounded-xl">
             <thead className="transition-all duration-300">
               <tr className="bg-slate-900 text-white sticky top-0 z-20">
-                <th className="p-3 text-center rounded-tl-xl">Name</th>
+                <th className="p-3 text-center">Name</th>
                 <th className="p-3 text-center">Type</th>
                 <th className="p-3 text-center">City</th>
                 <th className="p-3 text-center">Country</th>
                 <th className="p-3 text-center">Phone</th>
-                <th className="p-3 text-center rounded-tr-xl">Website</th>
+                <th className="p-3 text-center">Website</th>
               </tr>
             </thead>
             <tbody className="transition-all duration-300">
@@ -96,11 +108,7 @@ export default function BreweryTable() {
                         : "border-b border-gray-200"
                     }`}
                   >
-                    <td
-                      className={`p-2 text-blue-600 underline text-center ${
-                        i === breweries.length - 1 ? "rounded-b-xl" : ""
-                      }`}
-                    >
+                    <td className="p-2 text-blue-600 underline text-center">
                       <Link href={`/brewery/${brewery.id}`}>
                         {brewery.name}
                       </Link>
@@ -111,11 +119,7 @@ export default function BreweryTable() {
                     <td className="p-2 text-center">
                       {brewery.phone || "N/A"}
                     </td>
-                    <td
-                      className={`p-2 text-center ${
-                        i === breweries.length - 1 ? "rounded-b-xl" : ""
-                      }`}
-                    >
+                    <td className="p-2 text-center">
                       {brewery.website_url && (
                         <a
                           href={brewery.website_url}
@@ -131,14 +135,21 @@ export default function BreweryTable() {
                 ))
               )}
             </tbody>
+            <tfoot className="bg-slate-900 text-white">
+              <tr>
+                <td colSpan={6} className="p-3 text-center">
+                  Showing page {page} of {totalPages}
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
+        <Pagination
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          totalPages={totalPages}
+        />
       </div>
-      <Pagination
-        page={page}
-        onPageChange={(newPage) => setPage(newPage)}
-        totalPages={totalPages}
-      />
     </main>
   );
 }
