@@ -44,15 +44,25 @@ export default function BreweryFilters() {
   );
 
   // Handle keydown events for accessibility
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      // map each key to [whenHasFilters, whenNoFilters]
+      const actionMap: Record<string, [() => void, () => void]> = {
+        Enter: [applyFilters, () => setIsOpen(true)],
+        Escape: [clearFilters, () => setIsOpen(false)],
+      };
+
+      // Get the action pair for the pressed key
+      const pair = actionMap[e.key];
+      if (!pair) return;
+
+      // Execute the appropriate action based on whether filters are applied
       e.preventDefault();
-      hasFilters ? applyFilters() : setIsOpen(true);
-    } else if (e.key === "Escape") {
-      e.preventDefault();
-      hasFilters ? clearFilters() : setIsOpen(false);
-    }
-  };
+      const [withFilters, withoutFilters] = pair;
+      (hasFilters ? withFilters : withoutFilters)();
+    },
+    [hasFilters, applyFilters, clearFilters]
+  );
 
   return (
     <div
