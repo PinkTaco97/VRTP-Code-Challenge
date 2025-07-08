@@ -7,7 +7,8 @@ export default function Filters() {
   const [city, setCity] = useState("");
   const [show, setShow] = useState(false);
 
-  const applyFilters = () => {
+  const applyFilters = (e: React.FormEvent) => {
+    e.preventDefault();
     const event = new CustomEvent("filtersUpdated", {
       detail: { name, city },
     });
@@ -15,15 +16,19 @@ export default function Filters() {
   };
 
   // Reset filters
-  const resetFilters = () => {
+  const clearFilters = (e: React.FormEvent) => {
+    e.preventDefault();
     setName("");
     setCity("");
-    applyFilters();
+    const event = new CustomEvent("filtersUpdated", {
+      detail: { name: "", city: "" },
+    });
+    window.dispatchEvent(event);
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    applyFilters();
+    applyFilters(e);
   };
 
   return (
@@ -68,7 +73,7 @@ export default function Filters() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  applyFilters();
+                  applyFilters(e);
                 }
               }}
             />
@@ -80,7 +85,7 @@ export default function Filters() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
-                  applyFilters();
+                  applyFilters(e);
                 }
               }}
             />
@@ -92,10 +97,10 @@ export default function Filters() {
             </button>
             {(name || city) && (
               <button
-                onClick={resetFilters}
+                onClick={clearFilters}
                 className="bg-red-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-red-700 transition-colors"
               >
-                Reset
+                Clear
               </button>
             )}
           </form>
