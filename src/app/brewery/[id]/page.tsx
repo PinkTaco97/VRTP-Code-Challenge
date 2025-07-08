@@ -56,7 +56,7 @@ export default function BreweryDetails() {
       <div className="max-w-4xl mx-auto  rounded-2xl shadow-lg overflow-hidden">
         <Link
           href="/"
-          className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition-colors mb-6"
+          className="sm:w-auto w-full inline-flex justify-center bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition-colors mb-6"
         >
           Back
         </Link>

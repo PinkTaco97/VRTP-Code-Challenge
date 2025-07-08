@@ -54,7 +54,7 @@ export default function BreweryTable() {
   const totalPages = hasNextPage ? page + 1 : page;
 
   return (
-    <main className="w-full max-w-7xl mx-auto px-5 relative">
+    <main className="w-full max-w-5xl mx-auto px-5 relative">
       <BreweryFilters />
       <div
         className={`
@@ -73,8 +73,8 @@ export default function BreweryTable() {
           transition-all duration-500 ease-in-out transform
           ${isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
       >
-        <div className="overflow-hidden rounded-xl bg-white shadow-sm">
-          <table className="w-full table-auto border-separate border-spacing-0 bg-white shadow-sm text-black overflow-hidden rounded-xl">
+        <div className="overflow-y-hidden overflow-x-scroll rounded-xl bg-white shadow-sm">
+          <table className="w-full table-auto border-separate border-spacing-0 bg-white shadow-sm text-black overflow-y-hidden overflow-x-scroll rounded-xl">
             <thead className="transition-all duration-300">
               <tr className="bg-slate-900 text-white sticky top-0 z-20">
                 <th className="p-3 text-center">Name</th>
