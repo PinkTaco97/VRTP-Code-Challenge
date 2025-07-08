@@ -31,7 +31,7 @@ export default function BreweryTable() {
           transition-all duration-500 ease-in-out transform z-20
           ${isLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
       >
-        <div className="overflow-y-hidden overflow-x-scroll rounded-xl bg-white shadow-sm">
+        <div className="overflow-y-hidden md-lg-xl:overflow-x-scroll rounded-xl bg-white shadow-sm">
           <table className="w-full table-auto border-separate border-spacing-0 bg-white shadow-sm text-black overflow-y-hidden overflow-x-scroll rounded-xl">
             <thead className="transition-all duration-300">
               <tr className="bg-slate-900 text-white sticky top-0 z-20">
