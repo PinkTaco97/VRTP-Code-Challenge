@@ -3,6 +3,13 @@
 // React
 import React, { useState, useCallback } from "react";
 
+// Components
+import {
+  CloseButton,
+  FilterButton,
+  FilterActionButtons,
+} from "@/components/buttons";
+
 // Utilities
 import { dispatchBreweryFilters } from "@/utils/filters";
 
@@ -70,20 +77,7 @@ export default function BreweryFilters() {
         ${isOpen ? "sm:mb-7 mb-50" : "mb-3"}`}
     >
       {/* Filter Button */}
-      <button
-        type="button"
-        onClick={() => setIsOpen(true)}
-        onKeyDown={handleKeyDown}
-        className="w-full
-           mt-5 bg-slate-900 text-white p-3 rounded-xl hover:bg-slate-800 transition-colors cursor-pointer
-          sm:w-auto sm:mr-4"
-      >
-        <img
-          src="filter-solid.svg"
-          className="h-5 w-5 justify-self-center"
-          alt="Filter"
-        />
-      </button>
+      <FilterButton onClick={() => setIsOpen(true)} onKeyDown={handleKeyDown} />
 
       <div
         className={`
@@ -99,12 +93,8 @@ export default function BreweryFilters() {
             className="flex flex-wrap gap-4"
           >
             {/* Small screen close */}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="sm:hidden flex sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
-            >
-              <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
-            </button>
+            <CloseButton onClick={() => setIsOpen(false)} />
+
             <input
               className="p-2 border rounded-xl w-full sm:w-auto"
               placeholder="Filter by name"
@@ -119,33 +109,13 @@ export default function BreweryFilters() {
               onChange={(e) => setCity(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <div className="sm:w-auto w-full flex flex-row gap-4">
-              <button
-                onClick={applyFilters}
-                className={`sm:w-auto ${
-                  hasFilters ? "w-1/2" : "w-full"
-                } bg-blue-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition-colors`}
-              >
-                Go
-              </button>
-              {hasFilters && (
-                <button
-                  onClick={clearFilters}
-                  className="sm:w-auto w-1/2 bg-red-600 text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-red-700 transition-colors"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+
+            {/* Action buttons */}
+            <FilterActionButtons hasFilters={hasFilters} />
           </form>
 
           {/* Large screen close button */}
-          <button
-            onClick={() => setIsOpen(false)}
-            className="sm:flex hidden sm:w-auto w-full bg-slate-800 text-white p-3 rounded-xl hover:bg-slate-700 transition-colors cursor-pointer justify-center"
-          >
-            <img src="xmark-solid.svg" className="h-5 w-5" alt="Close" />
-          </button>
+          <CloseButton onClick={() => setIsOpen(false)} largeOnly />
         </div>
       </div>
     </div>
