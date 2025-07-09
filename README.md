@@ -5,7 +5,6 @@ A responsive TypeScript + React web app using Next.js that displays and filters 
 ## Table of Contents
 
 - [Features](#features)
-- [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
